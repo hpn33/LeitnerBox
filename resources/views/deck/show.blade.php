@@ -9,14 +9,14 @@
 
                     <div class="card-body">
                         {{ $deck->description }}
-                        <form action="/decks/{{ $deck->id }}" method="post">
+                        <form action="{{ $deck->path() }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
-                        <form action="/decks/{{ $deck->id }}/edit" method="post">
+                        <form action="{{ $deck->path('edit') }}" method="get">
                             @csrf
-                            <button type="submit" class="btn btn-danger">Edit</button>
+                            <button type="submit" class="btn btn-primary">Edit</button>
                         </form>
                     </div>
                 </div>

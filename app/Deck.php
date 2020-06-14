@@ -12,10 +12,17 @@ class Deck extends Model
     /**
      * @return string
      */
-    function path(): string
+    function path($extention = ''): string
     {
+        $path = "/decks/{$this->id}";
 
-        return "/decks/{$this->id}/";
+        if ($extention != '') {
+
+            $path .= "/{$extention}";
+
+        }
+
+        return $path;
 
     }
 

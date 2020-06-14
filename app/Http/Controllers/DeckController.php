@@ -30,7 +30,7 @@ class DeckController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -54,6 +54,7 @@ class DeckController extends Controller
         ]);
 
         return redirect($deck->path());
+
     }
 
     /**
@@ -73,11 +74,13 @@ class DeckController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Deck $deck
-     * @return Response
+     * @return Application|Factory|View
      */
     public function edit(Deck $deck)
     {
-        //
+
+        return view('deck.edit', compact('deck'));
+
     }
 
     /**
@@ -85,11 +88,18 @@ class DeckController extends Controller
      *
      * @param Request $request
      * @param Deck $deck
-     * @return Response
+     * @return Application|RedirectResponse|Redirector
      */
     public function update(Request $request, Deck $deck)
     {
-        //
+
+        $deck->update([
+            'name' => request('name'),
+            'description' => request('description')
+        ]);
+
+        return redirect($deck->path());
+
     }
 
     /**
