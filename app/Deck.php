@@ -10,15 +10,16 @@ class Deck extends Model
     protected $fillable = ['name', 'description'];
 
     /**
+     * @param string $extension
      * @return string
      */
-    function path($extention = ''): string
+    function path($extension = ''): string
     {
         $path = "/decks/{$this->id}";
 
-        if ($extention != '') {
+        if ($extension != '') {
 
-            $path .= "/{$extention}";
+            $path .= "/{$extension}";
 
         }
 
@@ -29,7 +30,7 @@ class Deck extends Model
     function cards()
     {
 
-        return $this->hasMany('cards');
+        return $this->hasMany('App\Card');
 
     }
 }

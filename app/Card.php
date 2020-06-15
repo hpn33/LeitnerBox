@@ -8,12 +8,13 @@ class Card extends Model
 {
     //
 
+    protected $fillable = ['deck_id', 'front', 'back'];
 
 
     function deck()
     {
 
-        return $this->belongsTo('Deck');
+        return $this->belongsTo('App\Deck');
 
     }
 }

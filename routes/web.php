@@ -23,9 +23,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('decks', 'DeckController');
-Route::resource('cards', 'CardController');
 
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/decks/{deck}/create', 'CardController@create');
+Route::post('/decks/{deck}/card', 'CardController@store');

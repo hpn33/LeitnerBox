@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Card;
+use App\Deck;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -20,22 +21,32 @@ class CardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(Deck $deck)
     {
-        //
+
+        return view('card.create', compact('deck'));
     }
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Deck $deck
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(Request $request ,Deck $deck)
     {
-        //
+
+        $deck->cards()->create([
+            'front' => request('front'),
+            'back' => request('back')
+        ]);
+
+        return redirect($deck->path());
+
     }
 
     /**
