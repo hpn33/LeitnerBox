@@ -7,6 +7,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Card::class, function (Faker $faker) {
     return [
-        //
+        'deck_id' => factory('App\Deck'),
+        'front' => $faker->sentence,
+        'back' => $faker->sentence
     ];
 });

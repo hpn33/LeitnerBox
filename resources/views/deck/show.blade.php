@@ -35,9 +35,9 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="row row-cols-3">
-                            @foreach($deck->cards()->get() as $card)
+                       <div class="row row-cols-3">
 
+                            @foreach($deck->cards as $card)
                                 <div class="col">
                                     <div class="card m-1">
                                         <div class="card-body card-text text-center">
@@ -48,6 +48,24 @@
                                             <p>
                                             {{ $card->back }}
                                             </p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <form action="{{ $card->path() }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+
+                                            <form action="{{ $card->path('edit') }}" method="get">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </form>
+
+                                            <form action="{{ $card->path() }}" method="get">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary">Show</button>
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>

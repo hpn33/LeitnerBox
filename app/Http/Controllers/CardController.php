@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Card;
 use App\Deck;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class CardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -21,7 +27,7 @@ class CardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function create(Deck $deck)
     {
@@ -33,9 +39,9 @@ class CardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Deck $deck
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Application|RedirectResponse|Redirector
      */
     public function store(Request $request ,Deck $deck)
     {
@@ -52,19 +58,21 @@ class CardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Card  $card
-     * @return \Illuminate\Http\Response
+     * @param Card $card
+     * @return Application|Factory|View
      */
     public function show(Card $card)
     {
-        //
+
+        return view('card.show', compact('card'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Card  $card
-     * @return \Illuminate\Http\Response
+     * @param Card $card
+     * @return Response
      */
     public function edit(Card $card)
     {
@@ -74,9 +82,9 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Card  $card
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Card $card
+     * @return Response
      */
     public function update(Request $request, Card $card)
     {
@@ -86,11 +94,15 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Card  $card
-     * @return \Illuminate\Http\Response
+     * @param Card $card
+     * @return Application|RedirectResponse|Redirector
      */
     public function destroy(Card $card)
     {
-        //
+
+        $card->delete();
+
+        return redirect($card->deck->path());
+
     }
 }

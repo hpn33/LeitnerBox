@@ -5,7 +5,7 @@ working with **Deck** and **Card**
 
 
 ## TODO
-- [ ] 
+- [ ] edit card
 
 
 

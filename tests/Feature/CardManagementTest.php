@@ -31,4 +31,30 @@ class CardManagementTest extends TestCase
         $this->assertDatabaseHas('cards', $attribute);
 
     }
+
+    /** @test */
+    function delete_card()
+    {
+
+        $card = factory('App\Card')->create();
+
+        $this->delete($card->path())
+            ->assertRedirect($card->deck->path());
+
+        $this->assertDatabaseMissing('cards', $card->only(['id', 'deck_id']));
+
+    }
+
+    /** @test */
+    function show_card_detail()
+    {
+
+        $card = factory('App\Card')->create();
+
+        $this->get($card->path())
+            ->assertOk()
+            ->assertSee($card->front)
+            ->assertSee($card->back);
+
+    }
 }

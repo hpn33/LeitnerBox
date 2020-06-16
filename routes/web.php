@@ -24,5 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('decks', 'DeckController');
 
+// cards
 Route::get('/decks/{deck}/create', 'CardController@create');
 Route::post('/decks/{deck}/card', 'CardController@store');
+Route::delete('/cards/{card}', 'CardController@destroy');
+Route::get('/cards/{card}', 'CardController@show');

@@ -11,10 +11,27 @@ class Card extends Model
     protected $fillable = ['deck_id', 'front', 'back'];
 
 
+    function path($extension = '')
+    {
+
+        $path = "/cards/{$this->id}";
+
+        if ($extension != '')
+        {
+
+            $path = "/{$extension}";
+
+        }
+
+        return $path;
+
+    }
+
     function deck()
     {
 
         return $this->belongsTo('App\Deck');
 
     }
+
 }
