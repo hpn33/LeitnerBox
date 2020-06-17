@@ -13,10 +13,7 @@
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
 
-                        <form action="{{ $card->path('edit') }}" method="get">
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                        </form>
+                        <a href="{{ $card->path('edit') }}">Edit</a>
 
                     </div>
 

@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'DeckController@index');
 
 Auth::routes();
 
@@ -29,3 +27,4 @@ Route::get('/decks/{deck}/create', 'CardController@create');
 Route::post('/decks/{deck}/card', 'CardController@store');
 Route::delete('/cards/{card}', 'CardController@destroy');
 Route::get('/cards/{card}', 'CardController@show');
+Route::get('/cards/{card}/edit', 'CardController@edit');

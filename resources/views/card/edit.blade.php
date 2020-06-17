@@ -8,34 +8,34 @@
                     <div class="card-header">Edit Deck</div>
 
                     <div class="card-body">
-                        <form action="{{ $deck->path() }}" method="post">
+                        <form action="{{ $card->path() }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
-                        <form method="post" action="{{ $deck->path() }}">
+                        <form method="post" action="{{ $card->path() }}">
                             @csrf
                             @method('patch')
 
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input class="form-control" id="name" name="name" value="{{ $deck->name ?? old('name') }}" required>
+                                <label for="front">Front</label>
+                                <input class="form-control" id="front" name="front" value="{{ old('front') ?? $card->front }}" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea name="description" id="description" class="form-control"
-                                          rows="8">{{ $deck->description ?? old('description') }}</textarea>
+                                <label for="back">Back</label>
+                                <textarea name="back" id="back" class="form-control"
+                                          rows="8">{{ old('description') ?? $card->back }}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ $deck->path() }}">Back</a>
+                                <a href="{{ $card->path() }}">Back</a>
                             </div>
 
-                        @if (count($errors))
+                            @if (count($errors))
                                 <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
+                                    @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
                                 </ul>

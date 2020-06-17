@@ -72,11 +72,13 @@ class CardController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Card $card
-     * @return Response
+     * @return Application|Factory|View
      */
     public function edit(Card $card)
     {
-        //
+
+        return view('card.edit', compact('card'));
+        
     }
 
     /**

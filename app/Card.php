@@ -19,7 +19,7 @@ class Card extends Model
         if ($extension != '')
         {
 
-            $path = "/{$extension}";
+            $path .= "/{$extension}";
 
         }
 

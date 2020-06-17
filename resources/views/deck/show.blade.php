@@ -12,10 +12,7 @@
                             @method('delete')
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
-                        <form action="{{ $deck->path('edit') }}" method="get">
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                        </form>
+                        <a href="{{ $deck->path('edit') }}">Edit</a>
 
                         <a href="{{ $deck->path('create') }}">Add Card</a>
                     </div>
@@ -56,15 +53,9 @@
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
 
-                                            <form action="{{ $card->path('edit') }}" method="get">
-                                                @csrf
-                                                <button type="submit" class="btn btn-primary">Edit</button>
-                                            </form>
+                                            <a href="{{ $card->path('edit') }}">Edit</a>
+                                            <a href="{{ $card->path() }}">Show</a>
 
-                                            <form action="{{ $card->path() }}" method="get">
-                                                @csrf
-                                                <button type="submit" class="btn btn-primary">Show</button>
-                                            </form>
 
                                         </div>
                                     </div>
