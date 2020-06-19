@@ -116,4 +116,17 @@ class DeckController extends Controller
         return redirect('/decks/');
 
     }
+
+
+    function review(Deck $deck)
+    {
+
+        $cardsCount = $deck->cards->count();
+        $cards = $deck->cards()->simplePaginate(1);
+
+        return view('deck.review', compact('cards', 'cardsCount'));
+
+    }
+
+
 }

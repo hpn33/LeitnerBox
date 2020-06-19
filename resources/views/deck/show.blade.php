@@ -5,16 +5,21 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ $deck->name }}
+                    <div class="card-header d-flex flex-row">
+                        <div class="flex-grow-1"> {{ $deck->name }}</div>
+                        <div class="d-flex flex-row">
 
-                        <form action="{{ $deck->path() }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                        <a href="{{ $deck->path('edit') }}">Edit</a>
 
-                        <a href="{{ $deck->path('create') }}">Add Card</a>
+                            <form action="{{ $deck->path() }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            <a class="btn" href="{{ $deck->path('edit') }}">Edit</a>
+
+                            <a class="btn" href="{{ $deck->path('create') }}">Add Card</a>
+                            <a class="btn " href="{{ $deck->path('review') }}">Review</a>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -32,18 +37,18 @@
                     </div>
 
                     <div class="card-body">
-                       <div class="row row-cols-3">
+                        <div class="row row-cols-3">
 
                             @foreach($deck->cards as $card)
                                 <div class="col">
                                     <div class="card m-1">
                                         <div class="card-body card-text text-center">
                                             <p>
-                                            {{ $card->front }}
+                                                {{ $card->front }}
                                             </p>
                                             <hr>
                                             <p>
-                                            {{ $card->back }}
+                                                {{ $card->back }}
                                             </p>
                                         </div>
                                         <div class="card-footer">

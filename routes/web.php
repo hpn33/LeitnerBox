@@ -28,3 +28,6 @@ Route::post('/decks/{deck}/card', 'CardController@store');
 Route::delete('/cards/{card}', 'CardController@destroy');
 Route::get('/cards/{card}', 'CardController@show');
 Route::get('/cards/{card}/edit', 'CardController@edit');
+
+
+Route::get('/decks/{deck}/review', 'DeckController@review');
