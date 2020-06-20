@@ -31,3 +31,4 @@ Route::get('/cards/{card}/edit', 'CardController@edit');
 
 
 Route::get('/decks/{deck}/review', 'DeckController@review');
+Route::get('/decks/{deck}/exam', 'DeckController@exam');

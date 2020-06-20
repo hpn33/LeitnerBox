@@ -48,7 +48,8 @@ class CardController extends Controller
 
         $deck->cards()->create([
             'front' => request('front'),
-            'back' => request('back')
+            'back' => request('back'),
+            'check_date' => today()
         ]);
 
         return redirect($deck->path());
@@ -78,7 +79,7 @@ class CardController extends Controller
     {
 
         return view('card.edit', compact('card'));
-        
+
     }
 
     /**

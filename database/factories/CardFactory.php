@@ -9,6 +9,7 @@ $factory->define(Card::class, function (Faker $faker) {
     return [
         'deck_id' => factory('App\Deck'),
         'front' => $faker->sentence,
-        'back' => $faker->sentence
+        'back' => $faker->sentence,
+        'check_date' => now()
     ];
 });

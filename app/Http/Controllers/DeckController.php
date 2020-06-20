@@ -128,5 +128,13 @@ class DeckController extends Controller
 
     }
 
+    function exam(Deck $deck)
+    {
+
+        $card = $deck->cards()->whereDate('check_date', '<=', now())->first();
+
+        return $card;
+
+    }
 
 }

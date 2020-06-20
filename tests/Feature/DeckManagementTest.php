@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Deck;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -66,6 +67,16 @@ class DeckManagementTest extends TestCase
         $deck->refresh();
 
         $this->assertEquals($attribute['name'], $deck->name);
+
+    }
+
+    /** @test */
+    function exam_of_card()
+    {
+
+        $deck = factory(Deck::class)->create();
+
+        $this->get($deck->path('exam'))->assertOk();
 
     }
 }
