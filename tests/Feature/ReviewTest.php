@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Deck;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,6 +12,16 @@ class ReviewTest extends TestCase
 
     use RefreshDatabase;
 
+    /** @test */
+    function empty_deck_not_have_review_mode()
+    {
+
+        $deck = factory(Deck::class)->create();
+
+        $this->get($deck->path('review'))
+            ->assertRedirect($deck->path());
+
+    }
 
     /** @test */
     public function review_cards_of_deck()

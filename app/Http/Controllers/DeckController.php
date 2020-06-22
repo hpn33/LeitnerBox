@@ -122,19 +122,16 @@ class DeckController extends Controller
     {
 
         $cardsCount = $deck->cards->count();
+        if ($cardsCount == 0) {
+            return redirect($deck->path());
+        }
+
         $cards = $deck->cards()->simplePaginate(1);
 
         return view('deck.review', compact('cards', 'cardsCount'));
 
     }
 
-    function exam(Deck $deck)
-    {
 
-        $card = $deck->cards()->whereDate('check_date', '<=', now())->first();
-
-        return $card;
-
-    }
 
 }

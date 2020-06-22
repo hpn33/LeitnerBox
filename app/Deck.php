@@ -33,4 +33,16 @@ class Deck extends Model
         return $this->hasMany('App\Card');
 
     }
+
+    function getStudyCardAttribute()
+    {
+
+        return $this->cards()
+            ->whereDate('check_date', '<=', now())
+            ->orderBy('state')
+            ->orderBy('id')
+            ->first();
+
+    }
+
 }

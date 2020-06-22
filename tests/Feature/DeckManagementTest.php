@@ -70,13 +70,4 @@ class DeckManagementTest extends TestCase
 
     }
 
-    /** @test */
-    function exam_of_card()
-    {
-
-        $deck = factory(Deck::class)->create();
-
-        $this->get($deck->path('exam'))->assertOk();
-
-    }
 }

@@ -19,6 +19,7 @@
 
                             <a class="btn" href="{{ $deck->path('create') }}">Add Card</a>
                             <a class="btn " href="{{ $deck->path('review') }}">Review</a>
+                            <a class="btn " href="{{ $deck->path('study') }}">Study</a>
                         </div>
                     </div>
 
