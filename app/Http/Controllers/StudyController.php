@@ -16,7 +16,9 @@ class StudyController extends Controller
             return redirect($deck->path());
         }
 
-        return view('deck.study', compact('deck'));
+        return view('deck.study', [
+            'deck_id' => $deck->id
+        ]);
 
     }
 
@@ -26,5 +28,15 @@ class StudyController extends Controller
         $state = request('state');
 
     }
+
+    function getCard(Deck $deck)
+    {
+
+        if (request()->wantsJson()) {
+            return ['card' => $deck->study_card];
+        }
+
+    }
+
 
 }
