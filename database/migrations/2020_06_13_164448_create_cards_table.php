@@ -21,7 +21,7 @@ class CreateCardsTable extends Migration
             $table->text('front');
             $table->text('back');
 
-            $table->unsignedInteger('state')->default(-1);
+            $table->integer('state')->default(-1);
             $table->timestamp('check_date');
 
             $table->timestamps();
