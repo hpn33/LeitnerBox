@@ -133,5 +133,18 @@ class DeckController extends Controller
     }
 
 
+    function results()
+    {
+
+        $decks = Deck::paginate(12);
+
+        if (\request()->wantsJson())
+            return $decks;
+
+        return $decks;
+
+    }
+
+
 
 }

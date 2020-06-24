@@ -15,20 +15,24 @@
 
                     <div class="card-body">
 
-                        <div class="row row-cols-3">
-                            @foreach($decks as $deck)
-                                <div class="col">
-                                    <div class="card m-1">
-                                        <div class="card-body card-text text-center h-100">
+                        <deck-list></deck-list>
 
-                                            <a href="{{ $deck->path() }}"><h5>{{ $deck->name }}</h5></a>
+{{--                        <div class="row row-cols-3">--}}
 
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+{{--                            @foreach($decks as $deck)--}}
+{{--                                <div class="col">--}}
+{{--                                    <div class="card m-1">--}}
+{{--                                        <div class="card-body card-text text-center h-100">--}}
 
-                        </div>
+{{--                                            <a href="{{ $deck->path() }}"><h5>{{ $deck->name }}</h5></a>--}}
+
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+
+{{--                        </div>--}}
+
                     </div>
                 </div>
             </div>
