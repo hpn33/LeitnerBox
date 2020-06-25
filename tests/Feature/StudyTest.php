@@ -26,38 +26,66 @@ class StudyTest extends TestCase
     }
 
     /** @test */
-    function get_card_of_today_before()
+//    function get_card_of_today_before()
+//    {
+//
+//        $deck = factory(Deck::class)->create();
+//
+//
+//        $card = factory(Card::class, 10)->create([
+//            'deck_id' => $deck->id,
+//            'check_date' => now()->addDays(rand(-2, 5))
+//        ])->first();
+//
+//        $this->get($deck->path('study'))->assertOk();
+//
+//        $this->assertLessThanOrEqual(now()->toDateTimeString(), $card->check_date);
+//
+//    }
+
+
+    /** @test */
+//    function get_card_by_state_order()
+//    {
+//
+//        $deck = factory(Deck::class)->create();
+//
+//        $cards = factory(Card::class, 10)->create([
+//            'deck_id' => $deck->id,
+//            'state' => rand(0, 5)
+//        ])->sortBy('state')->first();
+//
+//        $this->get($deck->path('study'))
+//            ->assertSee($cards->first()->front);
+//
+//    }
+
+
+    /** @test */
+    function set_last_study_date_to_today()
     {
 
         $deck = factory(Deck::class)->create();
 
+        $this->get('/study/' . $deck->id);
 
-        $card = factory(Card::class, 10)->create([
-            'deck_id' => $deck->id,
-            'check_date' => now()->addDays(rand(-2, 5))
-        ])->first();
-
-        $this->get($deck->path('study'))->assertOk();
-
-        $this->assertLessThanOrEqual(now()->toDateTimeString(), $card->check_date);
+        $this->assertEquals(today(), $deck->fresh()->last_study);
 
     }
 
 
     /** @test */
-    function get_card_by_state_order()
+    function ready_three_card_for_new_study_day()
     {
 
         $deck = factory(Deck::class)->create();
+        $cards = factory(Card::class, 3)->create();
 
-        $cards = factory(Card::class, 10)->create([
-            'deck_id' => $deck->id,
-            'state' => rand(0, 5)
-        ])->sortBy('state')->first();
+        $this->get('/study/' . $deck->id);
 
-
-        $this->get($deck->path('study'))
-            ->assertSee($cards->first()->front);
+        $this->assertEquals(0, $cards->first()->state);
 
     }
+
+
 }

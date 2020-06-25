@@ -7,7 +7,7 @@
                 <div class="card m-1">
                     <div class="card-body card-text text-center h-100">
 
-                        <a @href="deck"><h5>{{ deck.name }}</h5></a>
+                        <a :href="'/decks/'+deck.id"><h5>{{ deck.name }}</h5></a>
 
                     </div>
                 </div>

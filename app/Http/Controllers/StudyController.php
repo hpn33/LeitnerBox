@@ -22,19 +22,33 @@ class StudyController extends Controller
 
     }
 
-    function result()
-    {
-
-        $state = request('state');
-
-    }
+//    function result()
+//    {
+//
+//        $state = request('state');
+//
+//    }
 
     function getCard(Deck $deck)
     {
 
+        if ($deck->last_study < today()) {
+            $deck->update(['last_study' => today()]);
+
+            # ready three card for new study round
+            $cards = $deck->cards()->where('state', '==', -1)->inRandomOrder()->limit(3);
+
+            foreach ($cards as $card) {
+                $card->update(['state' => 0]);
+            }
+
+        }
+
         if (request()->wantsJson()) {
             return ['card' => $deck->study_card];
         }
+
+        return $deck;
 
     }
 

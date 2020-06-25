@@ -19,6 +19,8 @@ class CreateDecksTable extends Migration
             $table->string('name');
             $table->text('description');
 
+            $table->timestamp('last_study')->nullable()->default(null);
+
             $table->timestamps();
         });
     }

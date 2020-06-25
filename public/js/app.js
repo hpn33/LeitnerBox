@@ -2014,28 +2014,23 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.post('/study/' + this.deck_id)["catch"](function (e) {
-      _this.er = e;
+      console.log(e);
     }).then(function (r) {
       _this.card = r.data.card;
     });
   },
   data: function data() {
     return {
-      deck_path: '/decks/' + this.deck_id,
       card: {
         front: '',
         back: ''
       },
-      er: {},
-      show: false,
-      show_toggle: true
+      show: false
     };
   },
   methods: {
     toggle: function toggle() {
-      console.log('here');
       this.show = !this.show;
-      this.show_toggle = !this.show_toggle;
     }
   }
 });
@@ -38189,7 +38184,7 @@ var render = function() {
               "div",
               { staticClass: "card-body card-text text-center h-100" },
               [
-                _c("a", { on: { href: deck } }, [
+                _c("a", { attrs: { href: "/decks/" + deck.id } }, [
                   _c("h5", [_vm._v(_vm._s(deck.name))])
                 ])
               ]
@@ -38250,7 +38245,9 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header d-flex flex-row" }, [
       _c("div", { staticClass: "flex-grow-1" }, [
-        _c("a", { on: { href: _vm.deck_path } }, [_vm._v("Back to Deck")])
+        _c("a", { attrs: { href: "/decks/" + _vm.deck_id } }, [
+          _vm._v("Back to Deck")
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -38280,8 +38277,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.show_toggle,
-              expression: "show_toggle"
+              value: !_vm.show,
+              expression: "!show"
             }
           ],
           staticClass: "btn",

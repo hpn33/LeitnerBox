@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header d-flex flex-row">
             <div class="flex-grow-1">
-                <a @href="deck_path">Back to Deck</a>
+                <a :href="'/decks/' + deck_id">Back to Deck</a>
             </div>
         </div>
 
@@ -16,7 +16,7 @@
 
 
         <div class="card-footer d-flex justify-content-center">
-            <a v-show="show_toggle"
+            <a v-show="!show"
                @click="toggle()"
                class="btn" href="#">Show Answer</a>
 
@@ -40,7 +40,7 @@
 
             axios.post('/study/' + this.deck_id)
                 .catch((e) => {
-                    this.er = e
+                    console.log(e)
                 })
                 .then((r) => {
                     this.card = r.data.card
@@ -49,23 +49,18 @@
 
         data() {
             return {
-                deck_path: '/decks/' + this.deck_id,
                 card: {
                     front: '',
                     back: ''
                 },
-                er: {},
-                show: false,
-                show_toggle: true
+                show: false
             }
         },
 
         methods: {
 
             toggle() {
-                console.log('here')
                 this.show = !this.show
-                this.show_toggle = !this.show_toggle
             }
         }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Deck extends Model
 {
     //
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'last_study'];
 
     /**
      * @param string $extension
