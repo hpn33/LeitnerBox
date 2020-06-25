@@ -2013,24 +2013,47 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.post('/study/' + this.deck_id)["catch"](function (e) {
+    axios.get('/study/' + this.deck_id)["catch"](function (e) {
       console.log(e);
     }).then(function (r) {
-      _this.card = r.data.card;
+      _this.cards = r.data.cards;
+      _this.show_toggle_btn = true;
+
+      _this.readyCard();
     });
   },
   data: function data() {
     return {
       card: {
+        id: 0,
         front: '',
-        back: ''
+        back: '',
+        state: 0
       },
-      show: false
+      index: 0,
+      cards: {},
+      show: false,
+      show_toggle_btn: false
     };
   },
   methods: {
     toggle: function toggle() {
       this.show = !this.show;
+      this.show_toggle_btn = !this.show_toggle_btn;
+    },
+    readyCard: function readyCard() {
+      // for (const key in this.card.keys()) {
+      //     console.log(key)
+      // }
+      // this.card = this.cards[this.index]
+      this.card.id = this.cards[this.index].id;
+      this.card.front = this.cards[this.index].front;
+      this.card.back = this.cards[this.index].back;
+      this.card.state = this.cards[this.index].state;
+    },
+    nextCard: function nextCard() {
+      this.index++;
+      this.readyCard();
     }
   }
 });
@@ -38277,8 +38300,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: !_vm.show,
-              expression: "!show"
+              value: _vm.show_toggle_btn,
+              expression: "show_toggle_btn"
             }
           ],
           staticClass: "btn",
@@ -38305,8 +38328,8 @@ var render = function() {
           ],
           staticClass: "btn",
           on: {
-            href: function($event) {
-              _vm.deck_path + "study/" + _vm.card.id + "?p=again"
+            click: function($event) {
+              return _vm.nextCard()
             }
           }
         },
@@ -38326,8 +38349,8 @@ var render = function() {
           ],
           staticClass: "btn",
           on: {
-            href: function($event) {
-              _vm.deck_path + "study/" + _vm.card.id + "?p=good"
+            click: function($event) {
+              return _vm.nextCard()
             }
           }
         },
@@ -38347,8 +38370,8 @@ var render = function() {
           ],
           staticClass: "btn ",
           on: {
-            href: function($event) {
-              _vm.deck_path + "study/" + _vm.card.id + "?p=easy"
+            click: function($event) {
+              return _vm.nextCard()
             }
           }
         },

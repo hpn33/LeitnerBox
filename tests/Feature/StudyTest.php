@@ -79,11 +79,11 @@ class StudyTest extends TestCase
     {
 
         $deck = factory(Deck::class)->create();
-        $cards = factory(Card::class, 3)->create();
+        $cards = factory(Card::class, 3)->create(['deck_id' => $deck->id]);
 
         $this->get('/study/' . $deck->id);
 
-        $this->assertEquals(0, $cards->first()->state);
+        $this->assertEquals(0, $cards->fresh()->first()->state);
 
     }
 

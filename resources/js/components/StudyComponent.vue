@@ -16,16 +16,16 @@
 
 
         <div class="card-footer d-flex justify-content-center">
-            <a v-show="!show"
+            <a v-show="show_toggle_btn"
                @click="toggle()"
                class="btn" href="#">Show Answer</a>
 
 
-            <a v-show="show" class="btn" @href="deck_path + 'study/' + card.id + '?p=again'">again</a>
+            <a v-show="show" class="btn" @click="nextCard()">again</a>
 
-            <a v-show="show" class="btn" @href="deck_path + 'study/' + card.id + '?p=good'">good</a>
+            <a v-show="show" class="btn" @click="nextCard()">good</a>
 
-            <a v-show="show" class="btn " @href="deck_path + 'study/' + card.id + '?p=easy'">easy</a>
+            <a v-show="show" class="btn " @click="nextCard()">easy</a>
         </div>
     </div>
 
@@ -38,22 +38,25 @@
         props: ['deck_id'],
         mounted() {
 
-            axios.post('/study/' + this.deck_id)
+            axios.get('/study/' + this.deck_id)
                 .catch((e) => {
                     console.log(e)
                 })
                 .then((r) => {
-                    this.card = r.data.card
+                    this.cards = r.data.cards
+                    this.show_toggle_btn = true
+
+                    this.readyCard()
                 });
         },
 
         data() {
             return {
-                card: {
-                    front: '',
-                    back: ''
-                },
-                show: false
+                card: {id:0, front:'', back:'', state:0},
+                index: 0,
+                cards: {},
+                show: false,
+                show_toggle_btn: false
             }
         },
 
@@ -61,6 +64,25 @@
 
             toggle() {
                 this.show = !this.show
+                this.show_toggle_btn = !this.show_toggle_btn
+            },
+
+            readyCard() {
+
+                // for (const x in arguments) {
+                //     console.log(key)
+                // }
+                // this.card = this.cards[this.index]
+
+                this.card.id = this.cards[this.index].id
+                this.card.front = this.cards[this.index].front
+                this.card.back = this.cards[this.index].back
+                this.card.state = this.cards[this.index].state
+            },
+
+            nextCard() {
+                this.index++
+                this.readyCard()
             }
         }
 
