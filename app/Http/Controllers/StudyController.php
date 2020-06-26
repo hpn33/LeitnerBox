@@ -47,8 +47,7 @@ class StudyController extends Controller
             # update state to ready
             foreach ($cards as $card) {
 
-                $card->state = 0;
-                $card->save();
+                $card->update(['state' => 0]);
 
             }
 

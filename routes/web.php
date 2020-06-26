@@ -42,4 +42,3 @@ Route::get('/decks/{deck}/review', 'DeckController@review');
 Route::get('/decks/{deck}/study', 'StudyController@study');
 //Route::get('/decks/{deck}/study/{card}', 'StudyController@result');
 Route::get('/study/{deck}', 'StudyController@getCard');
-//Route::get('/study/{deck}', 'StudyController@getCard');

@@ -2008,6 +2008,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['deck_id'],
   mounted: function mounted() {
@@ -2016,43 +2023,80 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/study/' + this.deck_id)["catch"](function (e) {
       console.log(e);
     }).then(function (r) {
-      _this.cards = r.data.cards;
-      _this.show_toggle_btn = true;
+      // this.cards = r.data.cards
+      for (var key in Object.keys(r.data.cards)) {
+        _this.cards.push(r.data.cards[key]);
+      }
+
+      _this.show_answer_btn = true;
+      _this.power = true;
 
       _this.readyCard();
     });
   },
   data: function data() {
     return {
+      cards: [],
       card: {
         id: 0,
         front: '',
         back: '',
-        state: 0
+        state: 0,
+        again: false
       },
-      index: 0,
-      cards: {},
+      // index: 0,
+      power: false,
       show: false,
-      show_toggle_btn: false
+      show_answer_btn: false,
+      status: {
+        "new": 0,
+        again: 0,
+        success: 0,
+        reset: function reset() {
+          this["new"] = 0;
+          this.again = 0;
+          this.success = 0;
+        }
+      }
     };
   },
   methods: {
-    toggle: function toggle() {
-      this.show = !this.show;
-      this.show_toggle_btn = !this.show_toggle_btn;
+    showAnswer: function showAnswer() {
+      this.show = true;
+      this.show_answer_btn = false;
     },
     readyCard: function readyCard() {
-      // for (const key in this.card.keys()) {
-      //     console.log(key)
-      // }
-      // this.card = this.cards[this.index]
-      this.card.id = this.cards[this.index].id;
-      this.card.front = this.cards[this.index].front;
-      this.card.back = this.cards[this.index].back;
-      this.card.state = this.cards[this.index].state;
+      this.setStatus();
+      this.show = false;
+      this.show_answer_btn = true;
+      Object.assign(this.card, this.cards.shift()); // this.card = Object.keys(this.card).reduce((data, key) => {
+      //     data[key] = this.cards[this.index][key]
+      //     return data;
+      // }, {});
     },
-    nextCard: function nextCard() {
-      this.index++;
+    // nextCard() {
+    //     // this.index++
+    //
+    //     this.readyCard()
+    //
+    // },
+    setStatus: function setStatus() {
+      this.status.reset();
+
+      for (var index in Object.keys(this.cards)) {
+        var card = this.cards[index];
+        if (card.state == 0) this.status["new"]++;else if (card.again == true) this.status.again++;else this.status.success++;
+      }
+    },
+    again: function again() {
+      this.cards.push(this.card);
+      this.readyCard();
+    },
+    good: function good() {
+      this.cards.push(this.card);
+      this.readyCard();
+    },
+    easy: function easy() {
       this.readyCard();
     }
   }
@@ -38271,7 +38315,35 @@ var render = function() {
         _c("a", { attrs: { href: "/decks/" + _vm.deck_id } }, [
           _vm._v("Back to Deck")
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.power,
+              expression: "power"
+            }
+          ],
+          staticClass: "d-flex flex-row"
+        },
+        [
+          _c("p", { staticClass: "text-info" }, [
+            _vm._v(_vm._s(_vm.status.new))
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-danger" }, [
+            _vm._v(_vm._s(_vm.status.again))
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-success" }, [
+            _vm._v(_vm._s(_vm.status.success))
+          ])
+        ]
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body text-center" }, [
@@ -38300,15 +38372,15 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.show_toggle_btn,
-              expression: "show_toggle_btn"
+              value: _vm.show_answer_btn,
+              expression: "show_answer_btn"
             }
           ],
           staticClass: "btn",
           attrs: { href: "#" },
           on: {
             click: function($event) {
-              return _vm.toggle()
+              return _vm.showAnswer()
             }
           }
         },
@@ -38329,7 +38401,7 @@ var render = function() {
           staticClass: "btn",
           on: {
             click: function($event) {
-              return _vm.nextCard()
+              return _vm.again()
             }
           }
         },
@@ -38350,7 +38422,7 @@ var render = function() {
           staticClass: "btn",
           on: {
             click: function($event) {
-              return _vm.nextCard()
+              return _vm.good()
             }
           }
         },
@@ -38371,7 +38443,7 @@ var render = function() {
           staticClass: "btn ",
           on: {
             click: function($event) {
-              return _vm.nextCard()
+              return _vm.easy()
             }
           }
         },

@@ -8,7 +8,7 @@ class Card extends Model
 {
     //
 
-    protected $fillable = ['deck_id', 'front', 'back', 'check_date'];
+    protected $fillable = ['deck_id', 'front', 'back', 'state', 'check_date', 'again'];
 
 
     function path($extension = '')
