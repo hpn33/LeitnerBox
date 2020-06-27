@@ -5,7 +5,9 @@ working with **Deck** and **Card**
 
 
 ## TODO
-- [ ] exam
+- [ ] again (save again = true) (back to end of card list)
+- [ ] good ( set change_date to lest then noraml time of state and dont change state)
+- [x] easy ( set next state and next time for chack_date)
 
 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>

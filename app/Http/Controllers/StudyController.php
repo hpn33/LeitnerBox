@@ -64,11 +64,59 @@ class StudyController extends Controller
     }
 
 
-    function result(Card $card) {
+    function result(Card $card)
+    {
 
-//        dd(request()->all());
 
-        return true;
+        $data = request()->all();
+
+
+        $days = 0;
+        switch ($card->state) {
+
+            case 0:
+                $days = 1;
+                break;
+
+            case 1:
+                $days = 3;
+                break;
+
+            case 2:
+                $days = 7;
+                break;
+
+            case 3:
+                $days = 16;
+                break;
+
+            case 4:
+                $days = 31;
+                break;
+
+            case 5:
+                $days = 90;
+                break;
+
+            default:
+                $days = 200;
+
+        }
+
+        $data['check_date'] = now()->addDays($days);
+
+        $card->update($data);
+
+//        return $data;
+        return $card->toArray();
+
+    }
+
+
+    function save(Card $card) {
+
+        $card->update(\request()->all());
+        return $card->toArray();
 
 
     }

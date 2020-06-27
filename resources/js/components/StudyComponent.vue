@@ -59,6 +59,11 @@
                         cards.filter(card => card.state != 0 && !card.again),
                         cards.filter(card => card.again))
 
+                    // remove dublication
+                    this.cards = Array.from(new Set(this.cards))
+
+
+
 
                     this.show_answer_btn = true
                     this.power = true
@@ -137,10 +142,27 @@
 
             again() {
 
+                this.card
+
                 this.card.again = true
 
                 if (this.card.state > 0)
                     this.card.state--
+
+
+                axios.post('/study/' + this.card.id  + '/save', this.card)
+                    .catch((e) => {
+
+                        console.log(e)
+                        console.log('not save')
+
+                    })
+                    .then(r => {
+
+                        console.log(r.data)
+                        console.log('saved')
+
+                    })
 
                 this.cards.push(this.card)
 
@@ -156,16 +178,23 @@
 
             easy() {
 
-                this.card.state++
+                let card = this.card
+                card.state++
 
-                axios.post('/study/' + this.card.id, this.card)
+                axios.post('/study/' + card.id, card)
                     .catch((e) => {
                         console.log(e)
+
+                        this.cards.push(card)
                     })
                     .then(r => {
 
                         if (r.data)
                             console.log(r.data)
+
+                        else
+                            this.cards.push(card)
+
                     })
 
                 this.readyCard()

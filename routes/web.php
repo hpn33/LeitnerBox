@@ -43,3 +43,4 @@ Route::get('/decks/{deck}/study', 'StudyController@study');
 //Route::get('/decks/{deck}/study/{card}', 'StudyController@result');
 Route::get('/study/{deck}', 'StudyController@getCard');
 Route::post('/study/{card}', 'StudyController@result');
+Route::post('/study/{card}/save', 'StudyController@save');
