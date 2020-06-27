@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Card;
 use App\Deck;
 use Illuminate\Http\Request;
 
@@ -22,12 +23,6 @@ class StudyController extends Controller
 
     }
 
-//    function result()
-//    {
-//
-//        $state = request('state');
-//
-//    }
 
     function getCard(Deck $deck)
     {
@@ -68,5 +63,14 @@ class StudyController extends Controller
 
     }
 
+
+    function result(Card $card) {
+
+//        dd(request()->all());
+
+        return true;
+
+
+    }
 
 }

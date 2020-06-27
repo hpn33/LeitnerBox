@@ -7,10 +7,10 @@
                 <a :href="'/decks/' + deck_id">Back to Deck</a>
             </div>
 
-            <div v-show="power" class="d-flex flex-row">
-                <p class="text-info">{{ status.new }}</p>
-                <p class="text-danger">{{ status.again }}</p>
-                <p class="text-success">{{ status.success }}</p>
+            <div class="d-flex flex-row">
+                <p v-show="power" class="text-info" v-text="status.new"></p>
+                <p v-show="power" class="text-danger" v-text="status.again"></p>
+                <p v-show="power" class="text-success" v-text="status.success"></p>
             </div>
 
         </div>
@@ -50,11 +50,15 @@
                     console.log(e)
                 })
                 .then((r) => {
-                    // this.cards = r.data.cards
 
-                    for (const key in Object.keys(r.data.cards)) {
-                        this.cards.push(r.data.cards[key])
-                    }
+                    let cards = r.data.cards
+
+
+                    this.cards = [].concat(
+                        cards.filter(card => card.state == 0),
+                        cards.filter(card => card.state != 0 && !card.again),
+                        cards.filter(card => card.again))
+
 
                     this.show_answer_btn = true
                     this.power = true
@@ -66,8 +70,8 @@
         data() {
             return {
                 cards: [],
-                card: {id: 0, front: '', back: '', state: 0, again: false},
-                // index: 0,
+                card: {},
+
                 power: false,
                 show: false,
                 show_answer_btn: false,
@@ -75,14 +79,9 @@
                 status: {
                     new: 0,
                     again: 0,
-                    success: 0,
-
-                    reset() {
-                        this.new = 0
-                        this.again = 0
-                        this.success = 0
-                    }
+                    success: 0
                 }
+
             }
         },
 
@@ -96,47 +95,52 @@
             readyCard() {
 
                 this.setStatus()
-
                 this.show = false
-                this.show_answer_btn = true
 
-                Object.assign(this.card, this.cards.shift())
+                if (this.cards.length != 0) {
 
-                // this.card = Object.keys(this.card).reduce((data, key) => {
-                //     data[key] = this.cards[this.index][key]
-                //     return data;
-                // }, {});
+                    this.show_answer_btn = true
+                    this.card = this.cards.shift()
+                    return
+                }
+
+                this.power = false
+                this.card = {}
 
             },
 
-            // nextCard() {
-            //     // this.index++
-            //
-            //     this.readyCard()
-            //
-            // },
-
             setStatus() {
 
-                this.status.reset()
+                this.status.new = 0
+                this.status.again = 0
+                this.status.success = 0
+
 
                 for (const index in Object.keys(this.cards)) {
+
                     let card = this.cards[index]
 
-                    if (card.state == 0)
-                        this.status.new++
 
-                    else if (card.again == true)
+                    if (card.again)
                         this.status.again++
+
+                    else if (card.state == 0)
+                        this.status.new++
 
                     else
                         this.status.success++
 
                 }
 
+
             },
 
             again() {
+
+                this.card.again = true
+
+                if (this.card.state > 0)
+                    this.card.state--
 
                 this.cards.push(this.card)
 
@@ -151,6 +155,18 @@
             },
 
             easy() {
+
+                this.card.state++
+
+                axios.post('/study/' + this.card.id, this.card)
+                    .catch((e) => {
+                        console.log(e)
+                    })
+                    .then(r => {
+
+                        if (r.data)
+                            console.log(r.data)
+                    })
 
                 this.readyCard()
             }
