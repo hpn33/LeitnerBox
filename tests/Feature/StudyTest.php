@@ -88,4 +88,31 @@ class StudyTest extends TestCase
     }
 
 
+    /** @test */
+    function add_time_to_card()
+    {
+
+        $card = factory(Card::class)->create();
+        $current_time = clone $card->check_date;
+
+        $this->post('/study/' . $card->id . '/save', [
+            'card' => $card->toArray(),
+            'y' => 1,
+            'm' => 5,
+            'h' => 1,
+            'min' => 10,
+            's' => 30
+        ]);
+
+        $current_time->addyears(1);
+        $current_time->addMonths(5);
+        $current_time->addHours(1);
+        $current_time->addMinutes(10);
+        $current_time->addSeconds(30);
+        $this->assertEquals($current_time->toDateTimeString(), $card->fresh()->check_date);
+
+
+    }
+
+
 }

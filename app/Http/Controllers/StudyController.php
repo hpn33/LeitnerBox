@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Card;
 use App\Deck;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class StudyController extends Controller
 {
@@ -113,12 +114,39 @@ class StudyController extends Controller
     }
 
 
-    function save(Card $card) {
+    function save(Card $card)
+    {
 
-        $card->update(\request()->all());
+
+        $data = \request('card');
+
+
+        if (\request('y')) {
+            $data['check_date']->addYears(request('y'));
+        }
+
+        if (\request('m')) {
+            $data['check_date']->addMonths(request('m'));
+        }
+
+        if (\request('h')) {
+            $data['check_date']->addHours(request('h'));
+        }
+
+        if (\request('min')) {
+            $data['check_date']->addMinutes(request('min'));
+        }
+
+        if (\request('s')) {
+            $data['check_date']->addSeconds(request('s'));
+        }
+
+
+        $card->update($data);
         return $card->toArray();
 
 
     }
+
 
 }

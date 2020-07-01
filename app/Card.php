@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
@@ -16,8 +17,7 @@ class Card extends Model
 
         $path = "/cards/{$this->id}";
 
-        if ($extension != '')
-        {
+        if ($extension != '') {
 
             $path .= "/{$extension}";
 

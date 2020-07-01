@@ -5,8 +5,9 @@ working with **Deck** and **Card**
 
 
 ## TODO
-- [ ] again (save again = true) (back to end of card list)
-- [ ] good ( set change_date to lest then noraml time of state and dont change state)
+- [x] again (save again = true) (back to end of card list)
+- [ ] ~~good ( set change_date to lest then noraml time of state and dont change state)~~
+- [x] good ( go to end of list )
 - [x] easy ( set next state and next time for chack_date)
 
 

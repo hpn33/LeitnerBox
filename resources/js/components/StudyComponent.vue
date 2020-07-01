@@ -142,8 +142,6 @@
 
             again() {
 
-                this.card
-
                 this.card.again = true
 
                 if (this.card.state > 0)
@@ -170,6 +168,36 @@
             },
 
             good() {
+
+                if (this.card.again)
+                    this.card.again = false
+
+
+                let data = {'card': this.card}
+
+
+                if (this.card.state == 0)
+                    data["min"] = 10
+
+                else if (this.card.state == 1)
+                {
+                    data['h'] = 1
+                }
+
+                axios.post('/study/' + this.card.id  + '/save', $data)
+                    .catch((e) => {
+
+                        console.log(e)
+                        console.log('not save')
+
+                    })
+                    .then(r => {
+
+                        console.log(r.data)
+                        console.log('saved')
+
+                    })
+
 
                 this.cards.push(this.card)
 

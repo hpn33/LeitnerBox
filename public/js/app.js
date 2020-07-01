@@ -2023,11 +2023,16 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/study/' + this.deck_id)["catch"](function (e) {
       console.log(e);
     }).then(function (r) {
-      // this.cards = r.data.cards
-      for (var key in Object.keys(r.data.cards)) {
-        _this.cards.push(r.data.cards[key]);
-      }
+      var cards = r.data.cards;
+      _this.cards = [].concat(cards.filter(function (card) {
+        return card.state == 0;
+      }), cards.filter(function (card) {
+        return card.state != 0 && !card.again;
+      }), cards.filter(function (card) {
+        return card.again;
+      })); // remove dublication
 
+      _this.cards = Array.from(new Set(_this.cards));
       _this.show_answer_btn = true;
       _this.power = true;
 
@@ -2037,26 +2042,14 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       cards: [],
-      card: {
-        id: 0,
-        front: '',
-        back: '',
-        state: 0,
-        again: false
-      },
-      // index: 0,
+      card: {},
       power: false,
       show: false,
       show_answer_btn: false,
       status: {
         "new": 0,
         again: 0,
-        success: 0,
-        reset: function reset() {
-          this["new"] = 0;
-          this.again = 0;
-          this.success = 0;
-        }
+        success: 0
       }
     };
   },
@@ -2068,27 +2061,37 @@ __webpack_require__.r(__webpack_exports__);
     readyCard: function readyCard() {
       this.setStatus();
       this.show = false;
-      this.show_answer_btn = true;
-      Object.assign(this.card, this.cards.shift()); // this.card = Object.keys(this.card).reduce((data, key) => {
-      //     data[key] = this.cards[this.index][key]
-      //     return data;
-      // }, {});
+
+      if (this.cards.length != 0) {
+        this.show_answer_btn = true;
+        this.card = this.cards.shift();
+        return;
+      }
+
+      this.power = false;
+      this.card = {};
     },
-    // nextCard() {
-    //     // this.index++
-    //
-    //     this.readyCard()
-    //
-    // },
     setStatus: function setStatus() {
-      this.status.reset();
+      this.status["new"] = 0;
+      this.status.again = 0;
+      this.status.success = 0;
 
       for (var index in Object.keys(this.cards)) {
         var card = this.cards[index];
-        if (card.state == 0) this.status["new"]++;else if (card.again == true) this.status.again++;else this.status.success++;
+        if (card.again) this.status.again++;else if (card.state == 0) this.status["new"]++;else this.status.success++;
       }
     },
     again: function again() {
+      this.card;
+      this.card.again = true;
+      if (this.card.state > 0) this.card.state--;
+      axios.post('/study/' + this.card.id + '/save', this.card)["catch"](function (e) {
+        console.log(e);
+        console.log('not save');
+      }).then(function (r) {
+        console.log(r.data);
+        console.log('saved');
+      });
       this.cards.push(this.card);
       this.readyCard();
     },
@@ -2097,6 +2100,17 @@ __webpack_require__.r(__webpack_exports__);
       this.readyCard();
     },
     easy: function easy() {
+      var _this2 = this;
+
+      var card = this.card;
+      card.state++;
+      axios.post('/study/' + card.id, card)["catch"](function (e) {
+        console.log(e);
+
+        _this2.cards.push(card);
+      }).then(function (r) {
+        if (r.data) console.log(r.data);else _this2.cards.push(card);
+      });
       this.readyCard();
     }
   }
@@ -38317,9 +38331,8 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        {
+      _c("div", { staticClass: "d-flex flex-row" }, [
+        _c("p", {
           directives: [
             {
               name: "show",
@@ -38328,22 +38341,36 @@ var render = function() {
               expression: "power"
             }
           ],
-          staticClass: "d-flex flex-row"
-        },
-        [
-          _c("p", { staticClass: "text-info" }, [
-            _vm._v(_vm._s(_vm.status.new))
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-danger" }, [
-            _vm._v(_vm._s(_vm.status.again))
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-success" }, [
-            _vm._v(_vm._s(_vm.status.success))
-          ])
-        ]
-      )
+          staticClass: "text-info",
+          domProps: { textContent: _vm._s(_vm.status.new) }
+        }),
+        _vm._v(" "),
+        _c("p", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.power,
+              expression: "power"
+            }
+          ],
+          staticClass: "text-danger",
+          domProps: { textContent: _vm._s(_vm.status.again) }
+        }),
+        _vm._v(" "),
+        _c("p", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.power,
+              expression: "power"
+            }
+          ],
+          staticClass: "text-success",
+          domProps: { textContent: _vm._s(_vm.status.success) }
+        })
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body text-center" }, [
