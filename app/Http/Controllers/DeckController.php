@@ -121,14 +121,22 @@ class DeckController extends Controller
     function review(Deck $deck)
     {
 
-        $cardsCount = $deck->cards->count();
-        if ($cardsCount == 0) {
-            return redirect($deck->path());
-        }
 
-        $cards = $deck->cards()->simplePaginate(1);
+        if (request()->wantsJson())
+            return ['cards' => $deck->cards()->get()];
 
-        return view('deck.review', compact('cards', 'cardsCount'));
+
+        return view('deck.review', ['deck_id' => $deck->id]);
+
+
+//        $cardsCount = $deck->cards->count();
+//        if ($cardsCount == 0) {
+//            return redirect($deck->path());
+//        }
+//
+//        $cards = $deck->cards()->simplePaginate(1);
+//
+//        return view('deck.review', compact('cards', 'cardsCount'));
 
     }
 
@@ -146,5 +154,5 @@ class DeckController extends Controller
     }
 
 
-
 }
+

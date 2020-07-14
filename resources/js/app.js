@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('study-card', require('./components/StudyComponent.vue').default);
+Vue.component('review-card', require('./components/ReviewComponent.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('deck-list', require('./components/IndexDeckComponent').default);
 

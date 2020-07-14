@@ -34,7 +34,7 @@
                         <div class="flex-grow-1">
                             Cards
                         </div>
-                        <a href="{{ $deck->path('create') }}">Add Card</a>
+                        <a class="btn" href="{{ $deck->path('create') }}">Add</a>
                     </div>
 
                     <div class="card-body">
@@ -52,15 +52,15 @@
                                                 {{ $card->back }}
                                             </p>
                                         </div>
-                                        <div class="card-footer">
-                                            <form action="{{ $card->path() }}" method="post">
+                                        <div class="card-footer d-flex flex-row">
+                                            <form action="{{ $card->path() }}" method="post" >
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
 
-                                            <a href="{{ $card->path('edit') }}">Edit</a>
-                                            <a href="{{ $card->path() }}">Show</a>
+                                            <a class="btn " href="{{ $card->path('edit') }}">Edit</a>
+                                            <a class="btn " href="{{ $card->path() }}">Show</a>
 
 
                                         </div>

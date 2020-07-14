@@ -35,7 +35,8 @@ Route::get('/cards/{card}/edit', 'CardController@edit');
 
 
 # review mode
-Route::get('/decks/{deck}/review', 'DeckController@review');
+//Route::get('/decks/{deck}/review', 'DeckController@review');
+Route::get('/review/{deck}', 'DeckController@review');
 
 
 # study mode

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Decks
+                    <div class="card-header d-flex flex-row justify-content-between">Decks
                         <form action="/decks/create" method="get">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add</button>

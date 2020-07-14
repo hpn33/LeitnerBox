@@ -10,6 +10,11 @@ working with **Deck** and **Card**
 - [x] good ( go to end of list )
 - [x] easy ( set next state and next time for chack_date)
 
+- [ ] more info or total info about card study
+    * count of unstudy card
+    * count of study card
+    * count of restudy card
+
 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
